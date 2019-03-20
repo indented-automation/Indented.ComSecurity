@@ -1,3 +1,0 @@
-function Reset-ComAcl {
-
-}

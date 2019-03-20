@@ -1,3 +1,5 @@
+using namespace System.Security.AccessControl
+
 function Set-ComAcl {
     <#
     .SYNOPSIS
@@ -18,9 +20,9 @@ function Set-ComAcl {
 
         # The ACL object to apply.
         [Parameter(Mandatory, ValueFromPipeline)]
-        [System.Security.AccessControl.CommonSecurityDescriptor]$AclObject,
+        [CommonSecurityDescriptor]$AclObject,
 
-        # Whether or not the setting applies in 32-bit or 64-bit mode.
+        # Set to true if the 32-bit registry view should be used to set the ACL.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
         [Switch]$Is32Bit
     )
@@ -34,9 +36,11 @@ function Set-ComAcl {
             $bytes = [Byte[]]::new($AclObject.BinaryLength)
             $AclObject.GetBinaryForm($bytes, 0)
 
-            $existingBytes = (Get-ItemProperty -Path $path -Name $Type).$Type
+            $existingBytes = Get-ItemPropertyValue -Path $path -Name $Type
             if (Compare-Object $bytes $existingBytes -SyncWindow 0) {
-                Set-ItemProperty -Path $path -Name $Type -Value $bytes
+                if ($pscmdlet.ShouldProcess('Setting the {0} ACL' -f $Type)) {
+                    Set-ItemProperty -Path $path -Name $Type -Value $bytes
+                }
             }
         } catch {
             $pscmdlet.ThrowTerminatingError($_)

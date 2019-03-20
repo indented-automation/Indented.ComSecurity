@@ -1,4 +1,11 @@
 function GetOlePath {
+    <#
+    .SYNOPSIS
+        Get the path to OLE.
+    .DESCRIPTION
+        Get the path to OLE depending on the current process and the requested registry view.
+    #>
+
     [CmdletBinding()]
     param (
         [Switch]$Is32Bit
