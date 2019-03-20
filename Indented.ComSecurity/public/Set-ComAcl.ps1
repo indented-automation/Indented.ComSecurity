@@ -7,7 +7,7 @@ function Set-ComAcl {
     .DESCRIPTION
         Apply an updated ACL to COM Security.
     .EXAMPLE
-        PS> Set-ComAcl -Type MachineLaunchRestriction -AclObject $aclObject
+        Set-ComAcl -Type MachineLaunchRestriction -AclObject $aclObject
 
         Set a modified ACL for MachineLaunchRestriction.
     #>
