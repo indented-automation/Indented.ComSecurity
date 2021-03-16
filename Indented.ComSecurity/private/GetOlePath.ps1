@@ -8,6 +8,7 @@ function GetOlePath {
 
     [CmdletBinding()]
     param (
+        # Set to true if the 32-bit registry view should be used to get the ACL.
         [Switch]$Is32Bit
     )
 

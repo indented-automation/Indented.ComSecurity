@@ -53,7 +53,7 @@ function Get-ComAcl {
     }
 
     $aclObject | Add-Member AccessToString -MemberType ScriptProperty -Value {
-        ($this.Access | ForEach-Object { $_.ToString() }) -join "`r`n"
+        ($this.Access | ForEach-Object { $_.ToString() }) -join [Environment]::NewLine
     }
 
     $aclObject
